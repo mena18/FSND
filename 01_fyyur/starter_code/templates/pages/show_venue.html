@@ -5,15 +5,21 @@
 	<div class="col-sm-6">
 		<h1 class="monospace">
 			{{ venue.name }}
+			<a href="/venues/{{venue.id}}/edit" class="btn btn-primary">EDIT</a>
+			<a href="/venues/{{venue.id}}/delete" class="btn btn-danger">Delete</a>
 		</h1>
+
 		<p class="subtitle">
 			ID: {{ venue.id }}
 		</p>
-		<div class="genres">
-			{% for genre in venue.genres %}
-			<span class="genre">{{ genre }}</span>
-			{% endfor %}
-		</div>
+		{% if venue.genres %}
+			<div class="genres">
+				
+				{% for genre in venue.genres.split(',') %}
+				<span class="genre">{{ genre }}</span>
+				{% endfor %}
+			</div>
+		{% endif %}
 		<p>
 			<i class="fas fa-globe-americas"></i> {{ venue.city }}, {{ venue.state }}
 		</p>
@@ -54,7 +60,7 @@
 			<div class="tile tile-show">
 				<img src="{{ show.artist_image_link }}" alt="Show Artist Image" />
 				<h5><a href="/artists/{{ show.artist_id }}">{{ show.artist_name }}</a></h5>
-				<h6>{{ show.start_time|datetime('full') }}</h6>
+				<h6>{{ show.start_time }}</h6>
 			</div>
 		</div>
 		{% endfor %}

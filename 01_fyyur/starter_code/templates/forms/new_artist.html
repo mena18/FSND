@@ -1,0 +1,92 @@
+{% extends 'layouts/main.html' %}
+{% block title %}New Artist{% endblock %}
+{% block content %}
+
+
+{% for field, errors in form.errors.items() %}
+<div class="alert alert-danger">
+    {{ form[field].label }}: {{ ', '.join(errors) }}
+</div>
+{% endfor %}
+
+  <div class="form-wrapper">
+    <form method="post" class="form">
+      {{ form.csrf_token }}
+      <h3 class="form-heading">
+
+        {% if status == "create" %}
+          List a new Artist 
+        {% else %}
+          Edit Artist <em>{{ form.name.data }}</em>
+        {% endif %}
+
+      </h3>
+      <div class="form-group">
+        <label for="name">Name</label>
+        {{ form.name(class_ = 'form-control', autofocus = true) }}
+      </div>
+      <div class="form-group">
+          <label>City & State</label>
+          <div class="form-inline">
+            <div class="form-group">
+              {{ form.city(class_ = 'form-control', placeholder='City', autofocus = true) }}
+            </div>
+            <div class="form-group">
+              {{ form.state(class_ = 'form-control', placeholder='State', autofocus = true) }}
+            </div>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="phone">Phone</label>
+          {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true) }}
+        </div>
+      <div class="form-group">
+        <label for="genres">Genres</label>
+        <small>Ctrl+Click to select multiple</small>
+        {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', id='form.state', autofocus = true) }}
+      </div>
+      <div class="form-group">
+          <label for="genres">Facebook Link</label>
+          {{ form.facebook_link(class_ = 'form-control', placeholder='http://', id='form.state', autofocus = true) }}
+        </div>
+        <div class="form-group">
+          <label for="genres">image link</label>
+          {{ form.image_link(class_ = 'form-control', placeholder='http://', id='form.state', autofocus = true) }}
+        </div>
+        <div class="form-group">
+          <input class="form-check-label" type="checkbox" {% if form.seeking_venue.data %} checked {% endif %} name="seeking_venue" id="seeking_venue">
+          <label for="seeking_venue">Seeking Talent</label>
+          
+        </div>
+
+        <div class="form-group">
+          <label for="seeking_description">seeking_description</label>
+          {{ form.seeking_description(class_ = 'form-control', autofocus = true,id="seeking_description") }}
+        </div>
+
+      <input type="submit" value="{% if status == 'create' %}Create{% else %}Edit{% endif %} Artist" class="btn btn-primary btn-lg btn-block">
+    </form>
+  </div>
+
+
+<script>
+  check = document.getElementById("seeking_venue");
+  if(!check.checked){
+    document.getElementById('seeking_description').style.display = 'none'
+  }
+  check.onchange = function(e){
+    if(e.target.checked){
+      desc = document.getElementById('seeking_description')
+      desc.style.display = 'block'
+      desc.value = ""
+    }else{
+      desc = document.getElementById('seeking_description')
+      desc.style.display = 'none'
+      desc.value = ""
+    }
+  }
+
+</script>
+
+
+{% endblock %}

@@ -1,8 +1,17 @@
 {% extends 'layouts/main.html' %}
 {% block title %}New Show Listing{% endblock %}
 {% block content %}
+
+{% for field, errors in form.errors.items() %}
+<div class="alert alert-danger">
+    {{ form[field].label }}: {{ ', '.join(errors) }}
+</div>
+{% endfor %}
+
+
   <div class="form-wrapper">
     <form method="post" class="form">
+      {{ form.csrf_token }}
       <h3 class="form-heading">List a new show</h3>
       <div class="form-group">
         <label for="artist_id">Artist ID</label>
@@ -21,4 +30,6 @@
       <input type="submit" value="Create Venue" class="btn btn-primary btn-lg btn-block">
     </form>
   </div>
+
+
 {% endblock %}
